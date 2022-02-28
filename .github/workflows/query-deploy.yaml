@@ -3,9 +3,9 @@ name: deploy-query
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'query/**'
+      - "query/**"
 
 jobs:
   build:

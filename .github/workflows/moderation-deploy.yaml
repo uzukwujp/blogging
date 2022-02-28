@@ -3,9 +3,9 @@ name: deploy-moderation
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'moderation/**'
+      - "moderation/**"
 
 jobs:
   build:

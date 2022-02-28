@@ -3,9 +3,9 @@ name: deploy-comment
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'comment/**'
+      - "comment/**"
 
 jobs:
   build:

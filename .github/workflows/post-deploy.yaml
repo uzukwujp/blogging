@@ -3,9 +3,9 @@ name: deploy-post
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'post/**'
+      - "post/**"
 
 jobs:
   build:
