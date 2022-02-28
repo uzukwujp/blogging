@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment
+  template:
+    metadata:
+      labels:
+        app: comment
+    spec:
+      containers:
+        - name: comment
+          image: uzukwujp/comment:latest
+          ports:
+          - containerPort: 4000
+          env:
+            - name: MongoUrl
+              value: 'mongodb://comment-mongo-srv:27017/comment'
+
+            - name: clusterId
+              value: bloging
+
+            - name: url
+              value: 'http://nats-srv:4222'
+
+            - name: clientId
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+                  
+            - name: JWT
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment-srv
+spec:
+  selector:
+    app: comment
+  ports:
+    - name: comment
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

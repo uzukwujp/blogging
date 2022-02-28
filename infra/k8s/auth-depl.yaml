@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: uzukwujp/auth:latest
+          ports:
+          - containerPort: 4000
+          env:
+            - name: MongoUrl
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+
+            - name: clusterId
+              value: bloging
+
+            - name: clientId
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+            - name: url
+              value: 'http://nats-srv:4222'
+
+            - name: JWT
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 4000

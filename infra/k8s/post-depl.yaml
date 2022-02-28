@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post
+  template:
+    metadata:
+      labels:
+        app: post
+    spec:
+      containers:
+        - name: post
+          image: uzukwujp/post:latest
+          ports:
+          - containerPort: 5000
+          env:
+            - name: MongoUrl
+              value: 'mongodb://post-mongo-srv:27017/post'
+
+            - name: clusterId
+              value: bloging
+
+            - name: url
+              value: 'http://nats-srv:4222'
+
+            - name: clientId
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+                  
+            - name: JWT
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-srv
+spec:
+  selector:
+    app: post
+  ports:
+    - name: post
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

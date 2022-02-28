@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query
+  template:
+    metadata:
+      labels:
+        app: query
+    spec:
+      containers:
+        - name: query
+          image: uzukwujp/query:latest
+          ports:
+          - containerPort: 5000
+          env:
+            - name: MongoUrl
+              value: 'mongodb://query-mongo-srv:27017/query'
+
+            - name: clusterId
+              value: bloging
+
+            - name: url
+              value: 'http://nats-srv:4222'
+
+            - name: clientId
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+            - name: JWT
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-srv
+spec:
+  selector:
+    app: query
+  ports:
+    - name: query
+      protocol: TCP
+      port: 6000
+      targetPort: 5000
