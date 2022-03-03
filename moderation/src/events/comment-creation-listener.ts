@@ -35,10 +35,8 @@ export class CommentCreationListener extends BaseListener<CommentCreation> {
             data.status = 'approved';
 
             await new CommentModerationPublisher(this._client).publish(data);
-            console.log(`comment:${data.id} moderated successfully`)
+            
         }
-
-        
 
         msg.ack()
     } 

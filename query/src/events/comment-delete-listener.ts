@@ -41,7 +41,6 @@ export class CommentDeleteListener extends BaseListener < CommentDeleted> {
             const comments = blog.comments.filter((comment)=> comment._id !== data.id)
             blog.comments = comments;
             await blog.save()
-            console.log(`comment:${data.id} deleted successfully`)
             msg.ack()
         }
     }

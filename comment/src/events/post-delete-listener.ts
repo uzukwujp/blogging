@@ -18,8 +18,6 @@ export class PostDeletedListener extends BaseListener<PostDeleted>{
 
        const deletedPost =  await Post.deleteOne({_id: data.id})
        
-       console.log(`post:${data.id}deleted successfully`)
-       
         msg.ack()
     }
 };

@@ -2,7 +2,7 @@ import {Subjects, BaseListener} from '@jaypeeblogs/common';
 import {Message} from 'node-nats-streaming'
 
 import Comment from '../models/comment';
-import {CommentUpdatedPublisher} from './comment-update-publisher'
+import {CommentApprovalPublisher} from './comment-approval-publisher'
 
 export interface CommentModeration {
     subject:Subjects,
@@ -25,6 +25,8 @@ export class CommentModerationListener extends BaseListener<CommentModeration>{
     async onMessage(data:CommentModeration['data'], msg:Message) {
 
         const comment = await Comment.findOne({_id:data.id});
+
+        
         if(!comment){
         
             return 
@@ -34,7 +36,7 @@ export class CommentModerationListener extends BaseListener<CommentModeration>{
 
         await comment.save();
 
-        new CommentUpdatedPublisher(this._client).publish(
+        await new CommentApprovalPublisher(this._client).publish(
             {
                 id: comment.id,
                 postId: comment.postId,
@@ -43,8 +45,6 @@ export class CommentModerationListener extends BaseListener<CommentModeration>{
                 status: comment.status
             }
         );
-
-        console.log(`comment:${data.id} moderated successfully`)
 
         msg.ack();
 

@@ -25,7 +25,6 @@ export class PostDeleteListener extends BaseListener<PostDeleted> {
         await Post.deleteOne({_id: data.id});
 
         await Blog.deleteOne({_id: data.id})
-        console.log(`post:${data.id} deleted successfully `)
 
         msg.ack()
     }

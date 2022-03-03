@@ -11,6 +11,7 @@ import {PostCreationListener} from './events/post-creation-listener'
 import {PostDeleteListener} from './events/post-delete-listener'
 import {PostUpdatedListener} from './events/post-update-listener'
 import {UserCreationListener} from './events/user-creation-listener'
+import { CommentApprovalListener } from './events/comment-approval-listener';
 
 
 
@@ -73,6 +74,7 @@ const start = async (port:number) => {
         new PostDeleteListener(natsWrapper.client).listen()
         new PostUpdatedListener(natsWrapper.client).listen()
         new UserCreationListener(natsWrapper.client).listen()
+        new CommentApprovalListener(natsWrapper.client).listen()
         
 }catch(err){
 

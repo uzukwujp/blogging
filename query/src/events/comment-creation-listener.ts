@@ -53,7 +53,6 @@ export class CommentCreationListener extends BaseListener  <CommentCreation> {
         blog.comments.push(savedComment._id)
 
         await blog.save()
-        console.log(`saved comment:${savedComment._id} successfully`)
 
         msg.ack() 
     }

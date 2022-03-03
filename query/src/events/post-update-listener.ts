@@ -50,7 +50,6 @@ export class PostUpdatedListener extends BaseListener<PostUpdated> {
 
             await blog.save()
         }
-        console.log(`post:${data.id} updated successfully`)
 
         msg.ack()
 

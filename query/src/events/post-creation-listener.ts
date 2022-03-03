@@ -52,7 +52,6 @@ export class PostCreationListener extends BaseListener<PostCreation> {
         );
 
         await blog.save()
-        console.log(`saved post: ${post._id} successfully`)
 
         msg.ack();
 

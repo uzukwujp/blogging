@@ -6,6 +6,7 @@ import { natsWrapper } from './natsWrapper';
 import app from './app';
 import {PostCreationListener} from './events/post-creation-listener';
 import {PostDeletedListener} from './events/post-delete-listener'
+import { CommentModerationListener } from './events/comment-moderation-listener';
 
 
 const start = async (port:number) => {
@@ -57,7 +58,8 @@ try{
    
 
     new PostCreationListener(natsWrapper.client).listen();
-    new PostDeletedListener(natsWrapper.client).listen()
+    new PostDeletedListener(natsWrapper.client).listen();
+    new CommentModerationListener(natsWrapper.client).listen()
 
 }catch(err){
     console.error(err)

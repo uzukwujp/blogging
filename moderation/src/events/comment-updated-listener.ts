@@ -24,9 +24,6 @@ export class CommentUpdatedListener extends BaseListener<CommentUpdated> {
 
     async onMessage(data:CommentUpdated['data'], msg:Message){
 
-        if(data.status === 'approved'){
-           return  msg.ack();
-        }
 
         const result = filterComment(data.content);
 
@@ -34,11 +31,9 @@ export class CommentUpdatedListener extends BaseListener<CommentUpdated> {
             data.status = 'approved';
 
             await new CommentModerationPublisher(this._client).publish(data)
-            console.log(`comment:${data.id} in modertion service checked successfully`)
-        }
-
         
-
+        }
+        
         msg.ack();
     }
 };
