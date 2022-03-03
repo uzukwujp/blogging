@@ -4,7 +4,7 @@ import {Message} from 'node-nats-streaming'
 import Comment from '../models/comment';
 import Blog from '../models/blog'
 
-export interface CommentUpdated {
+export interface CommentApproval {
     subject:Subjects,
     data:{
         id:string,
@@ -16,13 +16,13 @@ export interface CommentUpdated {
 };
 
 
-export class CommentUpdateListener extends BaseListener < CommentUpdated > {
+export class CommentApprovalListener extends BaseListener < CommentApproval> {
 
-    subject:Subjects.commentUpdated = Subjects.commentUpdated
+    subject:Subjects.commentApproval = Subjects.commentApproval
 
     queuegroup = 'query-service'
 
-    async onMessage(data:CommentUpdated['data'],msg:Message){
+    async onMessage(data:CommentApproval['data'],msg:Message){
 
         const comment = await Comment.findOne(
             {
@@ -36,7 +36,7 @@ export class CommentUpdateListener extends BaseListener < CommentUpdated > {
             return 
         }
 
-        comment.set('content', data.content);
+        comment.set('status', data.status);
         const savedComment = await comment.save()
 
         const blog = await Blog.findById(
@@ -56,14 +56,8 @@ export class CommentUpdateListener extends BaseListener < CommentUpdated > {
         blog.comments.splice(index, 1);
 
         // creatng and adding the updated comment
-        blog.comments.push(
-            {
-                _id: savedComment.id,
-                content: savedComment.content,
-                author: savedComment.author
-            }
-        );
-
+        blog.comments.push(savedComment._id)
+        
         await blog.save()
 
         msg.ack()  

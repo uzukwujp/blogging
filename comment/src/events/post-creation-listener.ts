@@ -21,7 +21,6 @@ export class PostCreationListener extends BaseListener<PostCreation> {
         const post = Post.build({_id: data.postId, version: data.version});
 
         await post.save()
-        console.log(`successfully created an saved post:${post._id}`)
 
         msg.ack();
     }

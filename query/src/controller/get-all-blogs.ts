@@ -6,8 +6,16 @@ export const getAllBlogs = async (req:Request, res:Response) => {
 
 
 
-    const blogs = await Blog.find({}).populate('author', {name: 1})
-    .populate([
+    const blogs = await Blog.find({}).populate(
+        [
+            {
+                path: 'author',
+                model: 'Author',
+                select: 'name',
+
+            }
+        ]
+    ).populate([
         {
             path: 'comments',
             model: 'Comment',

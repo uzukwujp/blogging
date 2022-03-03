@@ -28,7 +28,6 @@ export class UserCreationListener extends BaseListener<UserCreation> {
         const author = Author.build({_id:data.id, name: data.name})
 
         await author.save()
-        console.log(`saved author:${author._id} successfully`)
 
         msg.ack()
     }
