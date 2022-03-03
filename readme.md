@@ -14,15 +14,15 @@ This is a microservice styled blog application. It consist of 5 services: _**pos
 
 baseUrl = http://www.blogsapi.xyz for now. You can add your own domain name to your cluster.
 
-1. Post <baseUrl>/api/users/signup _payload:_ `json {name: string, email: string, password: string}`
-1. Post <baseUrl>/api/users/signout
-1. Get <baseUrl>/api/users/currentuser
-1. Post <baseUrl>/api/users/sigin _payload:_ `json {email: string, password: string}`
-1. Post <baseUrl>/api/posts _payload:_ `json {topic: string, body: string}`
-1. Put <baseUrl>/api/posts/:postId _payload:_ `json {topic: string, body: string}`
-1. Delete <baseUrl>/api/posts/:postId
-1. Post <baseUrl>/api/comments/:postId _payload:_ `json {content: string}`
-1. Put <baseUrl>/api/comments/:commentId _payload:_ `json {content: string}`
-1. Delete <baseUrl>/api/comments/:commentId
-1. Get <baseUrl>/api/blogs/postId
-1. Get <baseUrl>/api/blogs
+1. **Post** <baseUrl>/api/users/signup _payload:_ `json {name: string, email: string, password: string}`
+1. **Post** <baseUrl>/api/users/signout
+1. **Get** <baseUrl>/api/users/currentuser
+1. **Post** <baseUrl>/api/users/sigin _payload:_ `json {email: string, password: string}`
+1. **Post** <baseUrl>/api/posts _payload:_ `json {topic: string, body: string}`
+1. **Put** <baseUrl>/api/posts/:postId _payload:_ `json {topic: string, body: string}`
+1. **Delete** <baseUrl>/api/posts/:postId
+1. **Post** <baseUrl>/api/comments/:postId _payload:_ `json {content: string}`
+1. **Put** <baseUrl>/api/comments/:commentId _payload:_ `json {content: string}`
+1. **Delete** <baseUrl>/api/comments/:commentId
+1. **Get** <baseUrl>/api/blogs/postId
+1. **Get** <baseUrl>/api/blogs
