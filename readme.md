@@ -12,7 +12,7 @@ This is a microservice styled blog application. It consist of 5 services: _**pos
 
 ## Endpoints
 
-baseUrl = http://www.blogsapi.xyz for now. You can add your own domain name place to your cluster.
+baseUrl = http://www.blogsapi.xyz for now. You can add your own domain name to your cluster.
 
 1. Post <baseUrl>/api/users/signup _payload:_ `json {name: string, email: string, password: string}`
 1. Post <baseUrl>/api/users/signout
